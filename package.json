@@ -1,0 +1,19 @@
+{
+  "name": "makeitreal_favs_api",
+  "version": "1.0.0",
+  "description": "Apis to makeitreal",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/leutamo/makeitreal_favs_api.git"
+  },
+  "author": "Giancarlos Araya",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/leutamo/makeitreal_favs_api/issues"
+  },
+  "homepage": "https://github.com/leutamo/makeitreal_favs_api#readme"
+}
