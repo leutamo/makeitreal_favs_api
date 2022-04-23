@@ -6,6 +6,5 @@ mongoose.connect(MONGODB_URI, {
     useUnifiedTopology: true,
     useNewUrlParser: true
 })
-.then(bd => console.log("Database is onLine")
+.then(bd => console.log("Database is onLine"))
 .catch(err => console.log(err))
-)
