@@ -1,4 +1,5 @@
-REST API FAV'S
+# REST API FAV'S
+
 This project it's created to manage favs links.
 
 BASE_URL: http://localhost:3000/api
