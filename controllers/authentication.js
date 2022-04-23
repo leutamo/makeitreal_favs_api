@@ -5,10 +5,17 @@ const Usuario = require('../models/Usuario');
 const authentication = async(req, res) => {
     const {email, password} = req.body;
     try {
-        const usuario = await Usuario.findOne({email});
+        const usuario = await Usuario.findOne({ email });
         if (!usuario) {
-            return res.status(400).json({
-                message: "Email or Password Incorrect!"
+            const newUser = new Usuario({ email, password });
+
+            const salt = bcryptjs.genSaltSync();
+            newUser.password = bcryptjs.hashSync(password, salt);
+
+            await newUser.save();
+            res.status(200).json({
+                message: "User Created",
+                newUser
             })
         }
 
@@ -18,6 +25,11 @@ const authentication = async(req, res) => {
                 message: "Email or Password Incorrect!"
             });
         }
+
+        const token = await getJWT(usuario.id);
+        res.json({        
+          token
+        })
 
     } catch (error) {
         console.log(error);
