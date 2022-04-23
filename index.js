@@ -5,11 +5,17 @@ const cors = require('cors');
 const app = express()
 const port = 3000
 
+const mongoose = require('mongoose');
+// Database
+require('./database');
+
 const auth = require("./routes/auth");
+const morgan = require('morgan');
 
 // Middlewares
 app.use(cors());
 app.use(express.json());
+app.use(morgan('dev'));
 
 app.get('/', (req, res) => {
   res.send("<h1>Node Api</h1>");
@@ -17,7 +23,6 @@ app.get('/', (req, res) => {
 
 // Auth Api
 app.use("/auth", auth);
-
 
 app.listen(port, () => {
   console.log(`App listening on port ${port}`)
