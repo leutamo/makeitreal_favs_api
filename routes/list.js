@@ -7,7 +7,7 @@ const { check } = require('express-validator');
 const { validations } = require('../middlewares/validations');
 const { authentication } = require('../controllers/authentication');
 
-const { createList, getAllList, deleteList } = require("../controllers/list");
+const { createList, getAllList, deleteList, singleList } = require("../controllers/list");
 const { isAuthenticated } = require("../middlewares/validations-jwt");
 
 router.route('/')
@@ -24,6 +24,9 @@ router.route('/')
 ], createList )
 
 router.route('/:id')
+.get([
+    isAuthenticated
+],singleList)
 .delete(deleteList);
 
 module.exports = router;

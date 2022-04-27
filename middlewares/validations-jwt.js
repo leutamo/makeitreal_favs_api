@@ -4,14 +4,20 @@ const Usuario = require("../models/Usuario");
 
 const isAuthenticated = async (req, res, next) => {
   //const token = req.header('Authorization');
-  const token = req.headers.authorization.split(' ')[1];
-  //console.log(token);
-  if(!token){
-    return res.status(401).json({
-      msg:'No token in request'
+  let token = ''
+  if (req.headers.authorization) {
+    token = req.headers.authorization.split(' ')[1];  
+    if(!token){
+      return res.status(401).json({
+        msg:'No token in request'
+      })
+    }
+  }else{
+    return res.json({
+      message: 'Please send a Token'
     })
   }
-
+  //console.log(token);
   try {
     const { uid } = jwt.verify(token, process.env.SECRET_KEY);
     //console.log('uid', uid);

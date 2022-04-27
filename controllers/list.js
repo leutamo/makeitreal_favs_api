@@ -47,9 +47,25 @@ const deleteList = async (req, res) => {
   }
 }
 
+const singleList = async (req, res) => {
+  const { id } = req.params;
+  if (id.length >= 24 ) {
+    const list = await List.findById(id).populate('usuario', 'email');
+    res.status(200).json({
+      message: 'Detail list by Id',
+      list
+    });
+  } else{
+    res.json({
+      message: "Id not valid"
+    });
+  }
+}
+
 module.exports = {
   createList,
   getAllList,
-  deleteList
+  deleteList,
+  singleList
 }
   
