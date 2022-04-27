@@ -7,9 +7,8 @@ const { check } = require('express-validator');
 const { validations } = require('../middlewares/validations');
 const { authentication } = require('../controllers/authentication');
 
-const { createList, getAllList } = require("../controllers/list");
+const { createList, getAllList, deleteList } = require("../controllers/list");
 const { isAuthenticated } = require("../middlewares/validations-jwt");
-
 
 router.route('/')
 .get([
@@ -22,6 +21,9 @@ router.route('/')
     check('description').notEmpty().withMessage('description is mandatory'),
     check('url').notEmpty().withMessage('url is mandatory'),
     validations
-], createList );
+], createList )
+
+router.route('/:id')
+.delete(deleteList);
 
 module.exports = router;

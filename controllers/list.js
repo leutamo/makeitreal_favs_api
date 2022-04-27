@@ -30,8 +30,26 @@ const getAllList = async (req, res) => {
   });
 }
 
+const deleteList = async (req, res) => {
+  const {id} = req.params;
+  const list = await List.findByIdAndDelete(id);
+  const user = req.user;
+  if (list) {
+    res.json({
+      message: 'List deleted',
+      list,
+      user
+    }); 
+  }else {
+    res.json({
+      message: 'Not find list'
+    });
+  }
+}
+
 module.exports = {
   createList,
-  getAllList
+  getAllList,
+  deleteList
 }
   
