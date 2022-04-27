@@ -12,6 +12,7 @@ const mongoose = require('mongoose');
 require('./database');
 
 const auth = require("./routes/auth");
+const list = require("./routes/list");
 const morgan = require('morgan');
 
 // Middlewares
@@ -25,6 +26,8 @@ app.get('/', (req, res) => {
 
 // Auth Api
 app.use("/auth", auth);
+// New List of favorites
+app.use("/api/favs", list);
 
 app.listen(port, () => {
   console.log(`App listening on port ${port}`)

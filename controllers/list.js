@@ -1,17 +1,71 @@
+const List = require("../models/List");
+
 const createList = async(req, res) => {
-    const { estado, usuario } = req.body;
-    const listDB = await List.findOne({title: resto.title});
+    const { title, description, link } = req.body;
+    const listDB = await List.findOne({title: title});
     if(listDB){
       return res.status(400).json({
         message: `title ${listDB.title} exists`
       })
     }
     const data = {
-      ...resto,
-      usuario: req.usuario._id
+      title,
+      description,
+      link,
+      state: true,
+      usuario: req.user._id
     }
     const list = new List(data);
     await list.save();
     res.status(200).json(list);
+}
+
+const getAllList = async (req, res) => {
+  const allList = await List.find({state: true}).populate('usuario', 'email');
+  const total = await List.countDocuments({state: true});
+  res.json({
+    message: 'All lists',
+    total,
+    allList
+  });
+}
+
+const deleteList = async (req, res) => {
+  const {id} = req.params;
+  const list = await List.findByIdAndDelete(id);
+  const user = req.user;
+  if (list) {
+    res.json({
+      message: 'List deleted',
+      list,
+      user
+    }); 
+  }else {
+    res.json({
+      message: 'Not find list'
+    });
   }
+}
+
+const singleList = async (req, res) => {
+  const { id } = req.params;
+  if (id.length >= 24 ) {
+    const list = await List.findById(id).populate('usuario', 'email');
+    res.status(200).json({
+      message: 'Detail list by Id',
+      list
+    });
+  } else{
+    res.json({
+      message: "Id not valid"
+    });
+  }
+}
+
+module.exports = {
+  createList,
+  getAllList,
+  deleteList,
+  singleList
+}
   
