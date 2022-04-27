@@ -7,14 +7,15 @@ const { check } = require('express-validator');
 const { validations } = require('../middlewares/validations');
 const { authentication } = require('../controllers/authentication');
 
-const { createList } = require("../controllers/list");
+const { createList, getAllList } = require("../controllers/list");
 const { isAuthenticated } = require("../middlewares/validations-jwt");
 
 
 router.route('/')
-.get((req, res) => {
-    res.send("<h1>Auth Login Get</h1>");
-})
+.get([
+    isAuthenticated,
+    validations
+],getAllList)
 .post([
     isAuthenticated,
     check('title').notEmpty().withMessage('title is mandatory'),
